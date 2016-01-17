@@ -22,14 +22,27 @@ type Tree<'a> = Node of 'a * (Tree<'a> list)
 
 let rec parseToNode (P (decs,stms)) =  Node ("Program",[parseDecs decs;parseStms stms])
    
-   and parseDecs decs = Node("Decs",List.collect parseDec decs)
-   and parseStms stms = Node("Stms",List.collect parseStm stms)
+   and parseDecs decs = Node("Decs",List.collect Dec decs)
+   and parseStms stms = Node("Stms",List.collect Stm stms)
+   and parseExps exps = Node("Exps",List.collect Exp exps)
 
-   and parseDec = function
+   and Exp = function
+      | N i -> [Node("Int",[Node(string(i),[])])]
+      | B b -> [Node("Bool",[Node(string(b),[])])]
+      | Access acc -> [Node("Access",Access acc)]
+      | Addr acc -> failwith "asd"
+      | Apply (s,exps) -> failwith "not implemented"
+
+   and Access = function
+      | AVar s -> [Node("Var \n" + s,[])]
+      | AIndex (acc,exp) -> failwith "Not impl"
+      | ADeref ex -> failwith "Not implemented" 
+
+   and Dec = function
       | VarDec (t,s) -> [Node ("VarDec",[Node(s,[]);Node(tString t,[])])]
       | FunDec _     -> [Node ("FUNCTION",[])]
 
-   and parseStm = function
+   and Stm = function
       | PrintLn ex -> [Node("PrintLn",[])]
       | Ass _      -> [Node("Ass",[])]
       | Return _     -> [Node("Return",[])]
@@ -37,6 +50,9 @@ let rec parseToNode (P (decs,stms)) =  Node ("Program",[parseDecs decs;parseStms
       | Do _ -> [Node("While",[])]
       | Block (decs,stms) -> [Node("Block",[parseDecs decs;parseStms stms])]
       | Call _ -> [Node("Call",[])]
+
+   and parseGC = List.collect 
+
 
    and tString = function 
       | ITyp                          -> "ITyp"
