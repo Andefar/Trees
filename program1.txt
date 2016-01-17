@@ -1,1 +1,0 @@
- (, hej, ) dup stringwidth pop 2 div neg 0 rmoveto show
