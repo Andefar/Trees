@@ -1,10 +1,22 @@
 ﻿let localPath = @"C:\Users\Silas\Dropbox\5. Semester\02257 - Anvendt funktionsprogrammering\Project 2\GuardedCommands\GuardedCommands\GuardedCommands\"
 let path = @"C:\Users\Silas\Dropbox\5. Semester\02257 - Anvendt funktionsprogrammering\Project 3\Trees\program1.txt"
 
+#r @".\bin\Debug\FSharp.PowerPack.dll";
 
 #load "AST.fs"
 #load "Parser.fs"
 #load "Lexer.fs"
+#load "Util.fs"
+
+open Tree.Util
+open Tree.AST
+open Parser
+open Lexer
+open ParserUtil
+
+System.IO.Directory.SetCurrentDirectory localPath;
+
+"fact.gc" |> parseString
 
 type Tree<'a> = Node of 'a * (Tree<'a> list)
 type Extent = (float * float) list
