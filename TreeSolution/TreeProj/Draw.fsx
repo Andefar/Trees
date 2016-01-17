@@ -4,7 +4,9 @@ open System.IO
 
 type Tree<'a> = Node of (string*float) * (Tree<'a> list)
 
-let path = @"/Users/AndreasLauritzen/tree.ps"
+//let path = @"/Users/AndreasLauritzen/tree.ps"
+let path = @"C:\Users\Silas\Dropbox\5. Semester\02257 - Anvendt funktionsprogrammering\Project 3\Trees\TreeSolution\TreeProj\tree.ps"
+
 let output = new System.Text.StringBuilder()
 let mutable first = true
 
@@ -74,5 +76,15 @@ let testTree = Node(("1", 0.0),
                                                          )
                                 ]
                      )
+
+let test2 =   Node
+                  (("Program", 0.0),
+                    [Node
+                       (("Decs", -1.25),
+                        [Node
+                           (("VarDec", -1.0),[Node (("a", -0.5),[]); Node (("ITyp", 0.5),[])]);
+                         Node
+                           (("VarDec", 1.0),[Node (("b", -0.5),[]); Node (("BTyp", 0.5),[])])]);
+                     Node (("Stms", 1.25),[Node (("Ass", -0.5),[]); Node (("Ass", 0.5),[])])])
 
 draw (testTree,output);;

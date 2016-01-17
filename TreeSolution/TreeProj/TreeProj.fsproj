@@ -66,6 +66,7 @@
 	<None Include="fact.gc" />
 	<None Include="temp.gc" />
     <None Include="TreeScript.fsx" />
+	<None Include="Draw.fsx" />
   </ItemGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
