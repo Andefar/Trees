@@ -64,6 +64,7 @@
     <Compile Include="Util.fs" />
 	<None Include="Ex0.gc" />
 	<None Include="fact.gc" />
+	<None Include="temp.gc" />
     <None Include="TreeScript.fsx" />
   </ItemGroup>
   <PropertyGroup>

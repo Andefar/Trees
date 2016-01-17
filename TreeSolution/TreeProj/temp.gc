@@ -1,0 +1,6 @@
+﻿begin
+  a:int,
+  b:bool;
+  a:=1;
+  b:=true
+end
