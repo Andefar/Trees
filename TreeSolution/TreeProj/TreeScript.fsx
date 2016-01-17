@@ -1,12 +1,54 @@
-﻿let localPath = @"C:\Users\Silas\Dropbox\5. Semester\02257 - Anvendt funktionsprogrammering\Project 2\GuardedCommands\GuardedCommands\GuardedCommands\"
-let path = @"C:\Users\Silas\Dropbox\5. Semester\02257 - Anvendt funktionsprogrammering\Project 3\Trees\program1.txt"
+﻿let guardian = @"C:\Users\Silas\Dropbox\5. Semester\02257 - Anvendt funktionsprogrammering\Project 2\GuardedCommands\GuardedCommands\GuardedCommands\"
+let localPath = @"C:\Users\Silas\Dropbox\5. Semester\02257 - Anvendt funktionsprogrammering\Project 3\Trees\TreeSolution\TreeProj\"
 
+#r @".\bin\Debug\FSharp.PowerPack.dll";
 
 #load "AST.fs"
 #load "Parser.fs"
 #load "Lexer.fs"
+#load "Util.fs"
+
+open Tree.Util
+open Tree.AST
+open Parser
+open Lexer
+open ParserUtil
+
+System.IO.Directory.SetCurrentDirectory localPath;
+
+let file = "temp.gc" |> parseFromFile
 
 type Tree<'a> = Node of 'a * (Tree<'a> list)
+
+let rec parseToNode (P (decs,stms)) =  Node ("Program",[parseDecs decs;parseStms stms])
+   
+   and parseDecs decs = Node("Decs",List.collect parseDec decs)
+   and parseStms stms = Node("Stms",List.collect parseStm stms)
+
+   and parseDec = function
+      | VarDec (t,s) -> [Node ("VarDec",[Node(s,[]);Node(tString t,[])])]
+      | FunDec _     -> [Node ("FUNCTION",[])]
+
+   and parseStm = function
+      | PrintLn ex -> [Node("PrintLn",[])]
+      | Ass _      -> [Node("Ass",[])]
+      | Return _     -> [Node("Return",[])]
+      | Alt _ -> [Node("If",[])]
+      | Do _ -> [Node("While",[])]
+      | Block (decs,stms) -> [Node("Block",[parseDecs decs;parseStms stms])]
+      | Call _ -> [Node("Call",[])]
+
+   and tString = function 
+      | ITyp                          -> "ITyp"
+      | BTyp                          -> "BTyp"
+      | PTyp _                        -> "PTyp"
+      | ATyp(t,None)                  -> "ATyp"
+      | ATyp(t,Some i)                -> "ATyp"
+      | FTyp (ts,None)                -> "Proc" 
+      | FTyp (ts,Some t)              -> "Func"
+
+let test = parseToNode file
+
 type Extent = (float * float) list
 
 let n1 = Node ("1",[Node("2",[Node("3",[]);Node("4",[])]);Node("5",[]);Node("6",[Node("7",[]);Node("8",[])])])
@@ -76,4 +118,4 @@ let rec reflect (Node (v,subtrees)) = Node (v,List.map reflect (rev subtrees))
 let rec reflectpos (Node((v,x),subtrees)) = Node((v,-x),List.map reflectpos subtrees)
 
 
-design n1
+design test
