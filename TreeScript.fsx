@@ -1,9 +1,12 @@
-﻿type Tree<'a> = Node of 'a * (Tree<'a> list)
+﻿
+
+type Tree<'a> = Node of 'a * (Tree<'a> list)
 type Extent = (float * float) list
 
+let n1 = Node ("1",[Node("2",[Node("3",[]);Node("4",[])]);Node("5",[]);Node("6",[Node("7",[]);Node("8",[])])])
 let a = ("Rod",[])
 
-let movetree (Node((label,x),subtrees),y) = Node((label,x+y),subtrees)
+let movetree (Node((label,x:float),subtrees),y:float) = Node((label,x+y),subtrees)
 
 let moveextent (e:Extent,x) = List.map (fun (p,q) -> (p+x,q+x)) e
 
@@ -19,8 +22,9 @@ let mergelist es = List.fold (fun acc ex -> merge (acc,ex)) [] es
 //let ls = [b;c]
 //mergelist ls
 
+// type fit: Extent*Extent -> float
 let rec fit = function
-   | ((p,_)::ps,(q,_)::qs) -> System.Math.Max(fit(ps,qs), p - q + 1.0)
+   | ((_:float,p)::ps,(q,_:float)::qs) -> System.Math.Max(fit(ps,qs), p - q + 1.0)
    | _                     -> 0.0 
 
 let fitlist1 es = 
@@ -44,8 +48,9 @@ let flipextent ex = List.map (fun (p,q) -> (-q,-p)) ex
 let fitlistr2 es = 
    rev es |> List.map flipextent |> fitlist1 |> List.map (-) |> rev
 
-let mean (x,y) = (x+y)/2.0
+let mean (x:float,y:float) = (x+y)/2.0
 
+// type fitlist: Extent list -> float list
 let fitlist es = List.map mean (List.zip (fitlist1 es) (fitlistr es))
 
 let design tree = 
@@ -60,3 +65,9 @@ let design tree =
       (resulttree,resultextent)
 
    fst (design' tree)
+
+let rec reflect (Node (v,subtrees)) = Node (v,List.map reflect (rev subtrees))
+let rec reflectpos (Node((v,x),subtrees)) = Node((v,-x),List.map reflectpos subtrees)
+
+
+design n1
