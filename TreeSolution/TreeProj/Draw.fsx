@@ -1,10 +1,12 @@
-﻿open System.IO
+﻿
 
+open System.IO
 
 type Tree<'a> = Node of (string*float) * (Tree<'a> list)
 
 let path = @"/Users/AndreasLauritzen/tree.ps"
 let output = new System.Text.StringBuilder()
+let mutable first = true
 
 let initPS() = 
     let start = ["%!\n";
@@ -36,18 +38,23 @@ let rec drawList (x:float,y:float) subtree =
 
 and drawSub (x:float,y:float) = function
     | Node((lab,offset),[])      -> let newX = (x+(offset*60.0))
-                                    String.concat "" [label(lab,(newX,y));line((newX,y+10.0),(newX,y+30.0));stroke()]
+                                    String.concat "" [label(lab,(newX,y));line((newX,y+10.0),(newX,y+30.0));line((newX,y+30.0),(x,y+30.0));stroke()]
+     
+    | Node((lab,offset),subtree) when first -> first <- false
+                                               let newX = (x+(offset*60.0))
+                                               let newY = y-60.0
+                                               String.concat "" [label(lab,(newX,y));line((newX,y-10.0),(newX,y-30.0));line((newX,y+30.0),(x,y+30.0));(drawList (newX,newY) subtree);stroke()]   
 
     | Node((lab,offset),subtree) -> let newX = (x+(offset*60.0))
                                     let newY = y-60.0
-                                    String.concat "" [label(lab,(newX,y));line((newX,y+10.0),(newX,y+30.0));line((newX,y-10.0),(newX,y-30.0));(drawList (newX,newY) subtree);stroke()]
+                                    String.concat "" [label(lab,(newX,y));line((newX,y+10.0),(newX,y+30.0));line((newX,y-10.0),(newX,y-30.0));line((newX,y+30.0),(x,y+30.0));(drawList (newX,newY) subtree);stroke()]
 
 
 
 
 let draw ((tree: Tree<string * float>),(sb:System.Text.StringBuilder)) = 
                 ignore(sb.Append (initPS()))
-                ignore(sb.Append (drawSub (0.0,-50.0) tree)) 
+                ignore(sb.Append (drawSub (0.0,-50.0) tree )) 
                 ignore(sb.Append (endPS()))
                 toFile(sb)
 
