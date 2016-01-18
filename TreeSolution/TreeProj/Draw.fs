@@ -50,17 +50,27 @@ let rec drawList (x:float,y:float) subtree =
     String.concat "" (List.map (fun tree -> drawSub (x,y) tree) subtree)
 
 and drawSub (x:float,y:float) = function
-    | Node((lab,offset),[])      -> let newX = (x+(offset*scale))
-                                    String.concat "" [label(lab,(newX,y-labDiff));line((newX,y+(height/lScale)),(newX,y+height/2.0));line((newX,y+height/2.0),(x,y+height/2.0));stroke()]
-     
+    //leaf
+    | Node((lab,offset),[])      -> let newX = (x+(offset*scale)) 
+                                    String.concat "" [label(lab,(newX,y-labDiff)); //Node label
+                                                      line((newX,y+(height/lScale)),(newX,y+height/2.0)); //Line above
+                                                      line((newX,y+height/2.0),(x,y+height/2.0)); //Line to center
+                                                      stroke()]
+    // first node
     | Node((lab,offset),subtree) when first -> first <- false
                                                let newX = (x+(offset*scale))
                                                let newY = y-height
-                                               String.concat "" [label(lab,(newX,y-labDiff));line((newX,y-(height/lScale)),(newX,y-height/2.0));(drawList (newX,newY) subtree);stroke()]   
-
+                                               String.concat "" [label(lab,(newX,y-labDiff)); //Node label
+                                                                 line((newX,y-(height/lScale)),(newX,y-height/2.0)); //Line beneath
+                                                                 (drawList (newX,newY) subtree)]   
+    // intermediate node
     | Node((lab,offset),subtree) -> let newX = (x+(offset*scale))
                                     let newY = y-height
-                                    String.concat "" [label(lab,(newX,y-labDiff));line((newX,y+(height/lScale)),(newX,y+height/2.0));line((newX,y-(height/lScale)),(newX,y-height/2.0));line((newX,y+height/2.0),(x,y+height/2.0));(drawList (newX,newY) subtree);stroke()]
+                                    String.concat "" [label(lab,(newX,y-labDiff)); //Node label
+                                                      line((newX,y+(height/lScale)),(newX,y+height/2.0)); //Line above
+                                                      line((newX,y-(height/lScale)),(newX,y-height/2.0)); //Line beneath
+                                                      line((newX,y+height/2.0),(x,y+height/2.0)); //Line to center
+                                                      (drawList (newX,newY) subtree)]
 
 let draw' ((tree: Tree<string * float>),(sb:System.Text.StringBuilder)) = 
                 ignore(sb.Append (initPS()))
