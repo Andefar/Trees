@@ -5,12 +5,12 @@ open Tree.AST
 type Tree<'a> = Node of 'a * (Tree<'a> list)
 type Extent = (float * float) list
 
-
 let rec parseToNode (P (decs,stms)) =  Node ("Program",[parseDecs decs;parseStms stms])
    
-and parseDecs decs = Node("Decs",List.collect Dec decs)
-and parseStms stms = Node("Stms",List.collect Stm stms)
-and parseExps exps = Node("Exps",List.collect Exp exps)
+and parseDecs decs   = Node("Decs",List.collect Dec decs)
+and parseParams pms  = Node("Params",List.collect Dec pms)
+and parseStms stms   = Node("Stms",List.collect Stm stms)
+and parseExps exps   = Node("Exps",List.collect Exp exps)
 
 and Exp = function
    | N i             -> [Node("Int",[Node(string(i),[])])]
@@ -25,8 +25,9 @@ and Access = function
    | _                  -> failwith "Project 2 doesnt support this" 
 
 and Dec = function
-   | VarDec (t,s) -> [Node ("VarDec",[Node(s,[]);Node(tString t,[])])]
-   | FunDec _     -> [Node ("FUNCTION",[])]
+   | VarDec (t,s)                   -> [Node ("VarDec",[Node(s,[]);Node(tString t,[])])]
+   | FunDec (Some t,s,pms,stm)      -> [Node ("Function",[Node("Name: " + s,[]);Node("ReturnType: " + tString t,[]);parseParams pms] @ Stm stm)]
+   | FunDec (None,s,pms,stm)        -> [Node ("Procedure",[Node("Name: " + s,[]);Node("ReturnType: " + tString t,[]);parseParams pms] @ Stm stm)]
 
 and Stm = function
    | PrintLn ex         -> [Node("PrintLn",Exp ex)]
@@ -36,11 +37,9 @@ and Stm = function
    | Do (GC gcs)        -> [Node("While",List.collect GC gcs)] // not done
    | Block (decs,stms)  -> [Node("Block",[parseDecs decs;parseStms stms])]
    | Call (s,exps)      -> [Node("Procedure: " + s,[parseExps exps])]
-   | _                  -> failwith "Not impl"
-
+   | _                  -> failwith "Project 2 doesnt support this"
 
 and GC (exp,stms)= [Node("GC",Exp exp @ [parseStms stms])] 
-
 
 and tString = function 
    | ITyp                          -> "ITyp"
