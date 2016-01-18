@@ -20,23 +20,44 @@ open Translate
 open Design
 open Draw
 
-System.IO.Directory.SetCurrentDirectory guardian;
+System.IO.Directory.SetCurrentDirectory localPath;
 
+// passing through parser from project 2
+let parse name = changePath localPath name
+                 (name + ".gc") |> parseFromFile
 
-let translate name = changePath localPath name
-                     (name + ".gc") |> parseFromFile |> translate
+// this is the extension done for project 3 
+let transDesignAndDraw tree =  tree |> translate |> design |> draw
 
-let designAndDraw tree =  tree |> design |> draw
+// draws and creates .ps file with the given "name"
+let draw name = parse name |> transDesignAndDraw
 
-let rec countNodes = function
+// counting all nodes in the the given program
+let rec countNodes' = function
    | Node(_,[]) -> 1
-   | Node(_,ls) -> 1 + (List.sum (List.map countNodes ls)) 
+   | Node(_,ls) -> 1 + (List.sum (List.map countNodes' ls)) 
 
-//#time "on"
-//ignore(parseToNodes "wide" |> countNodes)
-//translate "wide" |> designAndDraw
+let countNodes name = parse name |> translate |> countNodes'
 
-setScale 30.0
+let takeTime name = let a = parse name 
+                    let mutable totalTime = 0.0
+                    for i in [1..40] do
+                       let stopWatch = System.Diagnostics.Stopwatch.StartNew()
+                       a |> transDesignAndDraw
+                       stopWatch.Stop()
+                       totalTime <- totalTime + stopWatch.Elapsed.TotalMilliseconds
+                    totalTime/40.0
 
-let a = translate "QuickSortV1"
-a |> designAndDraw
+// Commando to draw and create .ps file
+//draw "fact"
+
+// change scales, every other value will dynamically update
+//setScale 20.0        // use smaller value for bigger programs - changing x axis
+//setHeight 20.0       // use values from 10.0 to 100.0 depending on preference - chaning y axis
+
+// Commando to see Node tree
+//parse "fact" |> translate
+
+// Commandos to measure time
+//countNodes "temp"               
+//takeTime "temp"
