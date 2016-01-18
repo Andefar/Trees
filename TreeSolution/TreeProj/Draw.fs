@@ -27,13 +27,19 @@ let toFile(sb:System.Text.StringBuilder) = File.WriteAllText(path,sb.ToString())
 let stroke() = "stroke\n"
 
 let label(s,(x,y)) =
-    let strings = [x.ToString();" ";y.ToString();" moveto\n";
+    let xI = (int x)
+    let yI = (int y)
+    let strings = [xI.ToString();" ";yI.ToString();" moveto\n";
                    " (";s;") dup stringwidth pop 2 div neg 0 rmoveto show\n"] 
     String.concat "" strings
 
 let line ((xStart,yStart),(xEnd,yEnd)) = 
-    let strings = [xStart.ToString();" ";yStart.ToString();" moveto\n";
-                   xEnd.ToString();" ";yEnd.ToString();" lineto\n";] 
+    let xStartI = (int xStart)
+    let yStartI = (int yStart)
+    let xEndI = (int xEnd)
+    let yEndI = (int yEnd)
+    let strings = [xStartI.ToString();" ";yStartI.ToString();" moveto\n";
+                   xEndI.ToString();" ";yEndI.ToString();" lineto\n";] 
     String.concat "" strings
 
 let rec drawList (x:float,y:float) subtree =
