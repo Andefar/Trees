@@ -1,11 +1,23 @@
 ﻿begin
   a:int,
   b:bool,
-  c:int,
   k:int,
-  o:int,
-  l:int,
-  e:bool;
+  ar:int[],
+  ab:bool[5],
+  function f(x:int,b:bool):int = {k:int; x:=x+1; 
+                                  if b -> return x
+                                   | true -> return -1
+                                  fi},
+  procedure p(a:int[]) = print a[0],
+  procedure l(x:int) = print x;
+
   a:=1;
-  b:=true
+  b:=true;
+  print a;
+  print f(1,b);
+  ar[0]:=a;
+  k:=ar[0];
+  p(ar);
+  l(ar[0]);
+  l(k)
 end
