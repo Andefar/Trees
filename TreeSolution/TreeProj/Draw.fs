@@ -13,7 +13,6 @@ let mutable lScale = height/7.5 + 0.1/fontSize
 let mutable labDiff = height/12.0
 
 let changeValues() = fontSize <- 10.0 + scale/10.0-4.0
-                     printfn "%A" fontSize
                      lScale <- height/7.5 + 0.1/fontSize
                      labDiff <- height/12.0
 

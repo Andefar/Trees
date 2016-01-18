@@ -65,11 +65,7 @@
 	<Compile Include="Translate.fs" />
 	<Compile Include="Design.fs" />
 	<Compile Include="Draw.fs" />
-	<None Include="Ex0.gc" />
-	<None Include="fact.gc" />
-	<None Include="temp.gc" />
-	<None Include="deep.gc" />
-	<None Include="wide.gc" />
+	<None Include="example.gc" />
 	<None Include="TreeScript.fsx" />
 	
   </ItemGroup>

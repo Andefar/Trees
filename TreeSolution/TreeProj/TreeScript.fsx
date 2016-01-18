@@ -1,5 +1,5 @@
-﻿let guardian = @"C:\Users\Silas\Dropbox\5. Semester\02257 - Anvendt funktionsprogrammering\Project 2\GuardedCommands\GuardedCommands\GuardedCommands\"
-let localPath = @"C:\Users\Silas\Dropbox\5. Semester\02257 - Anvendt funktionsprogrammering\Project 3\Trees\TreeSolution\TreeProj\"
+﻿let localPath = @"C:\Users\Silas\Dropbox\5. Semester\02257 - Anvendt funktionsprogrammering\Project 3\Trees\TreeSolution\TreeProj\"
+let gcfiles = localPath
 
 #r @".\bin\Debug\FSharp.PowerPack.dll";
 
@@ -20,7 +20,8 @@ open Translate
 open Design
 open Draw
 
-System.IO.Directory.SetCurrentDirectory localPath;
+// this directory is only used when downloading .gc files to parse
+System.IO.Directory.SetCurrentDirectory gcfiles;
 
 // passing through parser from project 2
 let parse name = changePath localPath name
@@ -48,16 +49,24 @@ let takeTime name = let a = parse name
                        totalTime <- totalTime + stopWatch.Elapsed.TotalMilliseconds
                     totalTime/40.0
 
-// Commando to draw and create .ps file
-//draw "fact"
 
+// -------------------- Draw and create .ps file from file name (raw filename) ---------------------
+
+// Commando to draw and create .ps file
+draw "example"
+
+(*
+// ------------------------------- Extra possible dynamiclly changes -------------------------------
 // change scales, every other value will dynamically update
-//setScale 20.0        // use smaller value for bigger programs - changing x axis
-//setHeight 20.0       // use values from 10.0 to 100.0 depending on preference - chaning y axis
+// Reasonable interval (20.0-80.0), default 40.0 - use smaller value for bigger programs - changing x axis 
+setScale 40.0
+// Reasonable interval (20.0-80.0), default 40.0 - changing distance between each layer - changing y axis
+setHeight 40.0   
 
 // Commando to see Node tree
-//parse "fact" |> translate
+parse "fact" |> translate
 
-// Commandos to measure time
-//countNodes "temp"               
-//takeTime "temp"
+// Commandos to measure time and nodes
+countNodes "temp"               
+takeTime "temp"
+*)
