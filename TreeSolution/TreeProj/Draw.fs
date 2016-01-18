@@ -1,7 +1,7 @@
 ﻿module Draw
 
 open System.IO
-open ParseToNode
+open Translate
 
 let mutable path = ""
 let output = new System.Text.StringBuilder()

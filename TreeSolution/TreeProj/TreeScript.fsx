@@ -7,7 +7,7 @@ let localPath = @"C:\Users\Silas\Dropbox\5. Semester\02257 - Anvendt funktionspr
 #load "Parser.fs"
 #load "Lexer.fs"
 #load "Util.fs"
-#load "ParseToNode.fs"
+#load "Translate.fs"
 #load "Design.fs"
 #load "Draw.fs"
 
@@ -16,22 +16,25 @@ open AST
 open Parser
 open Lexer
 open ParserUtil
-open ParseToNode
+open Translate
 open Design
 open Draw
 
-System.IO.Directory.SetCurrentDirectory guardian;
+System.IO.Directory.SetCurrentDirectory localPath;
 
 
-let parseToNodes name = changePath localPath name
-                        (name + ".gc") |> parseFromFile |> parseToNode
+let translate name = changePath localPath name
+                     (name + ".gc") |> parseFromFile |> translate
 
-let drawFile name = parseToNodes name |> design |> draw
+let designAndDraw tree =  tree |> design |> draw
 
 let rec countNodes = function
    | Node(_,[]) -> 1
    | Node(_,ls) -> 1 + (List.sum (List.map countNodes ls)) 
 
-parseToNodes "Ex1" |> countNodes
 #time "on"
-drawFile "Ex1"
+//ignore(parseToNodes "wide" |> countNodes)
+translate "wide" |> designAndDraw
+
+let a = translate "wide"
+a |> designAndDraw

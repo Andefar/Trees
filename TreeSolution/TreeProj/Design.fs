@@ -1,6 +1,6 @@
 ﻿module Design
 
-open ParseToNode
+open Translate
 
 
 let rec movetree (Node((label,x:float),subtrees),y:float) = Node((label,x+y),subtrees)

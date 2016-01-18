@@ -1,11 +1,11 @@
-﻿module ParseToNode
+﻿module Translate
 
 open Tree.AST
 
 type Tree<'a> = Node of 'a * (Tree<'a> list)
 type Extent = (float * float) list
 
-let rec parseToNode (P (decs,stms)) =  Node ("Program",[parseDecs decs;parseStms stms])
+let rec translate (P (decs,stms)) =  Node ("Program",[parseDecs decs;parseStms stms])
    
 and parseDecs decs   = Node("Decs",List.map Dec decs)
 and parseParams pms  = Node("Params",List.map Dec pms)
