@@ -1,7 +1,6 @@
 ﻿namespace Tree
 
 open System
-//open Machine
 
 module AST =
 

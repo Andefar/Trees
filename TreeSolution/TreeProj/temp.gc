@@ -1,6 +1,11 @@
 ﻿begin
   a:int,
-  b:bool;
+  b:bool,
+  c:int,
+  k:int,
+  o:int,
+  l:int,
+  e:bool;
   a:=1;
   b:=true
 end

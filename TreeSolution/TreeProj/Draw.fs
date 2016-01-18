@@ -1,14 +1,14 @@
-﻿
-module Draw
+﻿module Draw
 
 open System.IO
-
-type Tree<'a> = Node of (string*float) * (Tree<'a> list)
+open ParseToNode
 
 //let path = @"/Users/AndreasLauritzen/tree.ps"
-let path = @"C:\Users\Silas\Dropbox\5. Semester\02257 - Anvendt funktionsprogrammering\Project 3\Trees\TreeSolution\TreeProj\tree.ps"
-
+let mutable path = @"C:\Users\Silas\Dropbox\5. Semester\02257 - Anvendt funktionsprogrammering\Project 3\Trees\TreeSolution\TreeProj\test.ps"
 let output = new System.Text.StringBuilder()
+
+let changePath s = path <- @"C:\Users\Silas\Dropbox\5. Semester\02257 - Anvendt funktionsprogrammering\Project 3\Trees\TreeSolution\TreeProj\" + s + ".ps"
+ 
 let mutable first = true
 
 let initPS() = 
@@ -55,38 +55,10 @@ and drawSub (x:float,y:float) = function
 
 
 
-let draw ((tree: Tree<string * float>),(sb:System.Text.StringBuilder)) = 
+let draw' ((tree: Tree<string * float>),(sb:System.Text.StringBuilder)) = 
                 ignore(sb.Append (initPS()))
                 ignore(sb.Append (drawSub (0.0,-50.0) tree )) 
                 ignore(sb.Append (endPS()))
                 toFile(sb)
 
-
-
-
-(* TESTS *)
-//let testTree = Node(("1", 0.0),
-//                               [Node (("2", -1.0),
-//                                                  [Node (("3", -0.5),[]);
-//                                                   Node (("4", 0.5),[])
-//                                                  ]);
-//                                                   Node (("5", 0.0),[]);
-//                                                   Node (("6", 1.0),
-//                                                                    [Node (("7", -0.5),[]);
-//                                                                     Node (("8", 0.5),[])
-//                                                                    ]
-//                                                         )
-//                                ]
-//                     )
-//
-//let test2 =   Node
-//                  (("Program", 0.0),
-//                    [Node
-//                       (("Decs", -1.25),
-//                        [Node
-//                           (("VarDec", -1.0),[Node (("a", -0.5),[]); Node (("ITyp", 0.5),[])]);
-//                         Node
-//                           (("VarDec", 1.0),[Node (("b", -0.5),[]); Node (("BTyp", 0.5),[])])]);
-//                     Node (("Stms", 1.25),[Node (("Ass", -0.5),[]); Node (("Ass", 0.5),[])])])
-//
-//draw (testTree,output);;
+let draw tree = draw'(tree,output)
