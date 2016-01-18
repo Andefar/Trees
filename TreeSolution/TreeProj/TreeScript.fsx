@@ -1,4 +1,4 @@
-﻿//let guardian = @"C:\Users\Silas\Dropbox\5. Semester\02257 - Anvendt funktionsprogrammering\Project 2\GuardedCommands\GuardedCommands\GuardedCommands\"
+﻿let guardian = @"C:\Users\Silas\Dropbox\5. Semester\02257 - Anvendt funktionsprogrammering\Project 2\GuardedCommands\GuardedCommands\GuardedCommands\"
 let localPath = @"C:\Users\Silas\Dropbox\5. Semester\02257 - Anvendt funktionsprogrammering\Project 3\Trees\TreeSolution\TreeProj\"
 
 #r @".\bin\Debug\FSharp.PowerPack.dll";
@@ -20,12 +20,18 @@ open ParseToNode
 open Design
 open Draw
 
-System.IO.Directory.SetCurrentDirectory localPath;
-
-let drawFile name =  changePath localPath name
-                     (name + ".gc") |> parseFromFile |> parseToNode |> design |> draw
-                     (name + ".gc") |> parseFromFile |> parseToNode |> design
+System.IO.Directory.SetCurrentDirectory guardian;
 
 
+let parseToNodes name = changePath localPath name
+                        (name + ".gc") |> parseFromFile |> parseToNode
 
-drawFile "temp"
+let drawFile name = parseToNodes name |> design |> draw
+
+let rec countNodes = function
+   | Node(_,[]) -> 1
+   | Node(_,ls) -> 1 + (List.sum (List.map countNodes ls)) 
+
+parseToNodes "Ex1" |> countNodes
+#time "on"
+drawFile "Ex1"
