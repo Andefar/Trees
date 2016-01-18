@@ -3,13 +3,19 @@
 open System.IO
 open Translate
 
-let mutable path = ""
-let scale = 40.0
-let height = 50.0
+// global scales. Change only this to obtain different look of the visual tree
+let mutable scale = 40.0                      // optimal: 40.0 - scaling x axis - everthing from 20.0 to 100.0 will work fine in terms of looks
+let mutable height = 40.0                     // optimal: 40.0 - scaling y axis - everthing from 20.0 to 100.0 will work fine in terms of looks
+
+let mutable path = ""  
 let fontSize = scale/6.0
 let lScale = height/7.5 + 0.1/fontSize
-let labDiff = height/15.0
+let labDiff = height/12.0
 
+
+let setScale fl = scale <- fl
+let setHeight fl = height <- fl
+  
 let changePath localPath s = path <- String.concat "" [localPath;s;".ps"]
  
 let mutable first = true

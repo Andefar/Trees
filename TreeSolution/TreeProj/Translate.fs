@@ -38,7 +38,7 @@ and Stm = function
    | Alt (GC gcs)       -> Node("If",List.map GC gcs) 
    | Do (GC gcs)        -> Node("While",List.map GC gcs) 
    | Block (decs,stms)  -> Node("Block",[parseDecs decs;parseStms stms])
-   | Call (s,exps)      -> Node("Procedure: " + s,[parseExps exps])
+   | Call (s,exps)      -> Node("Call",[Node(s,[parseExps exps])])
    | _                  -> failwith "Project 2 doesnt support this"
 
 and GC (exp,stms)= Node("GC",[Exp exp;parseStms stms])

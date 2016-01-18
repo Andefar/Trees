@@ -36,5 +36,7 @@ let rec countNodes = function
 //ignore(parseToNodes "wide" |> countNodes)
 //translate "wide" |> designAndDraw
 
-let a = translate "Ex0"
+setScale 30.0
+
+let a = translate "QuickSortV1"
 a |> designAndDraw
