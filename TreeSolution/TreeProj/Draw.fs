@@ -4,7 +4,6 @@ open System.IO
 open Translate
 
 let mutable path = ""
-let output = new System.Text.StringBuilder()
 let scale = 40.0
 let height = 50.0
 let fontSize = scale/6.0
@@ -72,10 +71,10 @@ and drawSub (x:float,y:float) = function
                                                       line((newX,y+height/2.0),(x,y+height/2.0)); //Line to center
                                                       (drawList (newX,newY) subtree)]
 
-let draw' ((tree: Tree<string * float>),(sb:System.Text.StringBuilder)) = 
+let draw' (tree,sb:System.Text.StringBuilder) = 
                 ignore(sb.Append (initPS()))
                 ignore(sb.Append (drawSub (0.0,-50.0) tree )) 
                 ignore(sb.Append (endPS()))
                 toFile(sb)
 
-let draw tree = draw'(tree,output)
+let draw tree = draw'(tree,new System.Text.StringBuilder())

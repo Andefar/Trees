@@ -20,7 +20,7 @@ open Translate
 open Design
 open Draw
 
-System.IO.Directory.SetCurrentDirectory localPath;
+System.IO.Directory.SetCurrentDirectory guardian;
 
 
 let translate name = changePath localPath name
@@ -32,9 +32,9 @@ let rec countNodes = function
    | Node(_,[]) -> 1
    | Node(_,ls) -> 1 + (List.sum (List.map countNodes ls)) 
 
-#time "on"
+//#time "on"
 //ignore(parseToNodes "wide" |> countNodes)
-translate "wide" |> designAndDraw
+//translate "wide" |> designAndDraw
 
-let a = translate "wide"
+let a = translate "Ex0"
 a |> designAndDraw
