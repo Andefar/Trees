@@ -67,6 +67,7 @@
 	<Compile Include="Draw.fs" />
 	<None Include="example.gc" />
 	<None Include="TreeScript.fsx" />
+	<None Include="README.txt" />
 	
   </ItemGroup>
   <PropertyGroup>
