@@ -41,11 +41,11 @@ let rec countNodes' = function
 let countNodes name = parse name |> translate |> countNodes'
 
 // this function only takes time on operations from project 3, calculating mean of 40 samples
-let takeTime name = let a = parse name 
+let takeTime name = let a = parse name |> translate
                     let mutable totalTime = 0.0
                     for i in [1..40] do
                        let stopWatch = System.Diagnostics.Stopwatch.StartNew()
-                       a |> transDesignAndDraw
+                       ignore(a |> design)
                        stopWatch.Stop()
                        totalTime <- totalTime + stopWatch.Elapsed.TotalMilliseconds
                     totalTime/40.0
