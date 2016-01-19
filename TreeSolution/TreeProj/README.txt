@@ -22,6 +22,7 @@ All files beside the project is included in the "TreeSolution" folder.
 First steps before running the "TreeScript.fsx" file
 	- Change the "localPath" in top of file to same path as all code files (working directory)
 	- Optional: Change the "gcPath" (whereever your gcfiles are placed, you can use the "gc_files" folder)
+	- Remember to end with "\" or "/" when changing localPath or gcPath
 	- RUN THE HOLE "TreeScript.fsx" file (no build needed)
 	
 A "example.gc" file has been used to create "example.ps" in working directory, take a look (only if you didn't change the "gcPath").
