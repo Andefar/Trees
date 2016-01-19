@@ -19,12 +19,12 @@ and Exp = function
    | Apply (s,[e])      -> Node("Apply", [Node(s,[]);Exp e])
    | Apply (s,[e1;e2])  -> Node("Apply",[Exp e1;Node(s,[]);Exp e2])
    | Apply (s,exps)     -> Node("Apply",[Node(s,[]);parseExps exps])
-   | _                  -> failwith "Project 2 doesnt support this" 
+   | _                  -> failwith "Parser from Project 2 doesnt support this" 
 
 and Access = function 
    | AVar s             -> Node("Var",[Node(s,[])])
    | AIndex (acc,exp)   -> Node("Array",[Access acc;Exp exp])
-   | _                  -> failwith "Project 2 doesnt support this" 
+   | _                  -> failwith "Parser from Project 2 doesnt support this" 
 
 and Dec = function
    | VarDec (t,s)                   -> Node ("VarDec",[Node(s,[]);Node(tString t,[])])
@@ -39,7 +39,7 @@ and Stm = function
    | Do (GC gcs)        -> Node("While",List.map GC gcs) 
    | Block (decs,stms)  -> Node("Block",[parseDecs decs;parseStms stms])
    | Call (s,exps)      -> Node("Call",[Node(s,[parseExps exps])])
-   | _                  -> failwith "Project 2 doesnt support this"
+   | _                  -> failwith "Parser Project 2 doesnt support this"
 
 and GC (exp,stms)= Node("GC",[Exp exp;parseStms stms])
 
