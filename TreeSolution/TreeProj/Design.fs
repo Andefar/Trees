@@ -35,11 +35,6 @@ and fitlistr es =
                    x::fitlistr' (merge (moveextent (e,x),acc)) es
    rev (fitlistr' [] (rev es)) 
 
-// alternative to fitlistr    
-and flipextent ex = List.map (fun (p,q) -> (-q,-p)) ex
-and fitlistr2 es = 
-   rev es |> List.map flipextent |> fitlist1 |> List.map (-) |> rev
-
 and mean (x:float,y:float) = (x+y)/2.0
 
 // type fitlist: Extent list -> float list
