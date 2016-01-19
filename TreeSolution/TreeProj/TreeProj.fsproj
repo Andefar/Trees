@@ -48,27 +48,27 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Numerics" />
-	    <Reference Include="FSharp.PowerPack">
+    <Reference Include="FSharp.PowerPack">
       <HintPath>bin\Debug\FSharp.PowerPack.dll</HintPath>
     </Reference>
-	<Reference Include="FsLexYacc.Runtime">
+    <Reference Include="FsLexYacc.Runtime">
       <HintPath>..\packages\FsLexYacc.Runtime.6.1.0\lib\net40\FsLexYacc.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AST.fs" />
+    <None Include="temp.gc" />
     <None Include="Parser.fsi" />
     <Compile Include="Parser.fs" />
     <Compile Include="Lexer.fs" />
     <Compile Include="Util.fs" />
-	<Compile Include="Translate.fs" />
-	<Compile Include="Design.fs" />
-	<Compile Include="Draw.fs" />
-	<None Include="example.gc" />
-	<None Include="TreeScript.fsx" />
-	<None Include="README.txt" />
-	
+    <Compile Include="Translate.fs" />
+    <Compile Include="Design.fs" />
+    <Compile Include="Draw.fs" />
+    <None Include="TreeScript.fsx" />
+    <None Include="README.txt" />
+    <None Include="example.gc" />
   </ItemGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
