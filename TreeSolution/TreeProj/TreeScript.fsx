@@ -1,5 +1,5 @@
 ﻿let localPath = @"C:\Users\Silas\Dropbox\5. Semester\02257 - Anvendt funktionsprogrammering\Project 3\Trees\TreeSolution\TreeProj\"
-let gcfiles = localPath
+let gcPath = localPath
 
 #r @".\bin\Debug\FSharp.PowerPack.dll";
 
@@ -21,7 +21,7 @@ open Design
 open Draw
 
 // this directory is only used when downloading .gc files to parse
-System.IO.Directory.SetCurrentDirectory gcfiles;
+System.IO.Directory.SetCurrentDirectory gcPath;
 
 // passing through parser from project 2
 let parse name = changePath localPath name
@@ -40,6 +40,7 @@ let rec countNodes' = function
 
 let countNodes name = parse name |> translate |> countNodes'
 
+// this function only takes time on operations from project 3, calculating mean of 40 samples
 let takeTime name = let a = parse name 
                     let mutable totalTime = 0.0
                     for i in [1..40] do
